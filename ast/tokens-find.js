@@ -40,12 +40,10 @@ function findTokenValue(tokens, index) {
     case "string":
       return extractStringValue(tokens, index);
 
-      break;
     case "array":
       // Find the closing bracket
       return extractArrayValue(tokens, index);
 
-      break;
     case "method":
       tokenValue = handleMethodTokens(tokens, index + 3);
       console.log("tokenValue:", tokenValue);

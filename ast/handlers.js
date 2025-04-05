@@ -43,7 +43,7 @@ function parseVariableDeclaration(tokens, index, kind) {
       value: findTokenValue(tokens, index),
     },
   };
-  return { declarationNode, assignmentNode };
+  return { declarationNode, assignmentNode, newIndex: index + 4 };
 }
 
 export { parseVariableDeclaration };

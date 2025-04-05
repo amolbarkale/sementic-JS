@@ -20,6 +20,7 @@ function createAst(tokens) {
       case "const":
       case "var":
         const result = parseVariableDeclaration(tokens, i, token);
+        console.log("result:", result);
 
         break;
 
