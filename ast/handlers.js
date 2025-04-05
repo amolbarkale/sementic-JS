@@ -19,8 +19,8 @@ function parseVariableDeclaration(tokens, index, kind) {
 
   //Memory Phase 2:
   {
-    let x = undefined;
-    let y = undefined;
+    let x = 10;
+    let y = 20;
   }
 
   //create two nodes: declaration node, assignment node
@@ -28,7 +28,7 @@ function parseVariableDeclaration(tokens, index, kind) {
   const declarationNode = {
     nodeType: "VariableDeclaration",
     metaData: {
-      name: tokens[i + 1],
+      name: tokens[index + 1],
       value: undefined,
       kind: kind,
       dataType: findTokenDataType(tokens, index),
@@ -38,7 +38,7 @@ function parseVariableDeclaration(tokens, index, kind) {
   const assignmentNode = {
     nodeType: "VariableAssignment",
     metaData: {
-      name: tokens[i + 1],
+      name: tokens[index + 1],
       dataType: findTokenDataType(tokens, index),
       value: findTokenValue(tokens, index),
     },

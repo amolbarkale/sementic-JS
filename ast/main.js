@@ -1,4 +1,4 @@
-import { parseVariableDeclaration } from "./handlers.jss";
+import { parseVariableDeclaration } from "./handlers.js";
 
 function createAst(tokens) {
   //Step 1: init AST
@@ -24,8 +24,6 @@ function createAst(tokens) {
         break;
 
       case "print":
-        console.log("print:", token);
-
         //handle print statements here
 
         break;

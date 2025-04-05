@@ -77,8 +77,8 @@ function handleMethodTokens(tokens, index) {
   return joinedValue;
 }
 
-("pablo pandey is a real person");
-//[",pablo,pandey,is, a, real, person,"]
+("amol barkale is a real person");
+//[",amol, barkale, is, a, real, person, "]
 
 function extractStringValue(tokens, index) {
   const startQuote = tokens[index + 3];
