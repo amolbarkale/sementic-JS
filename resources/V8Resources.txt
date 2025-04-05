@@ -1,0 +1,3 @@
+v8 engine tokenization: https://github.com/v8/v8/blob/main/src/parsing/parsing.h
+
+v8 engine create AST: https://github.com/v8/v8/blob/main/src/parsing/parser.cc

@@ -1,14 +1,25 @@
 import fs from "fs";
 import chalk from "chalk";
 import { tokenize } from "../lexer/tokenizer.js";
+import { codeCleaner } from "../lexer/cleaners.js";
+import { Parse } from "../parser/main.js";
 
 function InterpretJS(sourcecode) {
-  const tokens = tokenize(sourcecode);
-  console.log("tokens:", tokens);
+  //Step1: read sourcecode using node fs module
+
+  //step2: cleaning the source code
+  let result = codeCleaner(sourcecode);
+
+  //step3: tokenize source code
+  const tokens = tokenize(result);
+
+  //Step4: parser(tokens) -> AST
+
+  const AST = Parse(tokens);
 }
 
 function runFile(filePath) {
-  fs.readFile(filePath, "utf8", (err, data) => {
+  fs.readFile(filePath, "utf8", (err, sourcecode) => {
     if (err) {
       console.error(`Error reading file: ${filePath}`);
       console.log(err);
@@ -16,7 +27,7 @@ function runFile(filePath) {
     }
 
     //passing the sourcecode
-    let result = InterpretJS(data);
+    let result = InterpretJS(sourcecode);
   });
 }
 
