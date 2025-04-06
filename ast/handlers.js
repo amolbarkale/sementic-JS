@@ -25,7 +25,6 @@ function parseVariableDeclaration(tokens, index, kind) {
   }
 
   //create two nodes: declaration node, assignment node
-
   const declarationNode = {
     nodeType: "VariableDeclaration",
     metaData: {
