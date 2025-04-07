@@ -1,49 +1,37 @@
 import { findTokenDataType, findTokenValue } from "./tokens-find.js";
 import { isAllDigits } from "./utility.js";
 
-function parseVariableDeclaration(tokens, index, kind) {
-  // [let, x, =, 10]
+function ParseVariableStatement(tokens, index, kind) {
+  // // Node for variable declaration
+  // const declarationNode = {
+  //   nodeType: "VariableDeclaration",
+  //   metaData: {
+  //     name: tokens[index + 1],
+  //     // scope: scope, // assuming all variables are global for this example
+  //     // value: kind === "var" ? undefined : ReferenceError(kind),
+  //     value: undefined,
+  //     kind: kind,
 
-  // we are at 0th index
-  // let + 1 = variable name
-  // let + 2 = assignment
-  // let + 3 = value
+  //     dataType: findTokenDataType(tokens, index),
+  //   },
+  // };
 
-  //JS goes through code in 2 phases
-  //in first it only declared nodes
-
-  //Memory Phase 1:
-  {
-    let x = undefined;
-    let y = undefined;
-  }
-
-  //Memory Phase 2:
-  {
-    let x = 10;
-    let y = 20;
-  }
-
-  //create two nodes: declaration node, assignment node
-  const declarationNode = {
+  // Node for variable assignment
+  const variableNode = {
     nodeType: "VariableDeclaration",
     metaData: {
       name: tokens[index + 1],
-      value: undefined,
-      kind: kind,
       dataType: findTokenDataType(tokens, index),
+
+      value: findTokenValue(tokens, index),
+      kind: kind,
     },
   };
 
-  const assignmentNode = {
-    nodeType: "VariableAssignment",
-    metaData: {
-      name: tokens[index + 1],
-      dataType: findTokenDataType(tokens, index),
-      value: findTokenValue(tokens, index),
-    },
+  return {
+    variableNode,
+    newIndex: index + 4,
   };
-  return { declarationNode, assignmentNode, newIndex: index + 4 };
 }
 
 // Helper function to consume tokens and return a metadata object for print statements
@@ -74,4 +62,4 @@ function parsePrintStatement(index, tokens) {
   return { node, newIndex: index + 1 }; // +1 to move past the closing ')'
 }
 
-export { parseVariableDeclaration, parsePrintStatement };
+export { ParseVariableStatement, parsePrintStatement };
