@@ -1,5 +1,6 @@
 import { Memory } from "../core/memory.js";
 import {
+  parseFunctionCall,
   parseFunctionStatement,
   parsePrintStatement,
   ParseVariableStatement,
@@ -56,10 +57,40 @@ function createAst(tokens) {
 
         break;
       case "function":
-        let temp = parseFunctionStatement(tokens, i);
+        let { node: nodeFunction, newIndex: newIndexFunction } =
+          parseFunctionStatement(tokens, i);
+
+        let functionBodyNode = createAst(nodeFunction.metaData.body);
+
+        let functionNode = {
+          name: nodeFunction.metaData.functionName,
+          value: functionBodyNode,
+          type: "function",
+        };
+
+        Memory.write(functionNode);
+
+        nodeFunction.functionBodyNode = functionBodyNode;
+        ast.push(nodeFunction);
+
+        i = newIndexFunction - 1;
         break;
       default:
         //handle unknown tokens
+
+        // Check for a function call pattern: functionName followed by '()'
+        if (
+          i + 2 < tokens.length &&
+          tokens[i + 1] === "(" &&
+          tokens[i + 2] === ")"
+        ) {
+          const { node: nodeFunctionCall, newIndex: newIndexFunctionCall } =
+            parseFunctionCall(tokens, i);
+
+          ast.push(nodeFunctionCall);
+
+          i = newIndexFunctionCall - 1;
+        }
 
         break;
     }

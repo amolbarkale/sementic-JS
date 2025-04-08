@@ -24,7 +24,7 @@ function InterpretJS(sourcecode) {
   logMemory();
 
   //loop over AST node and interpret
-
+  console.log(chalk.red("Execution phase: Interpretation starts"));
   for (let i = 0; i < AST.length; i++) {
     const currentNode = AST[i];
     const currentNodeType = currentNode.nodeType;

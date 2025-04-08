@@ -1,3 +1,5 @@
 v8 engine tokenization: https://github.com/v8/v8/blob/main/src/parsing/parsing.h
 
 v8 engine create AST: https://github.com/v8/v8/blob/main/src/parsing/parser.cc
+
+v8 engine statement for stack/heap memroy: https://v8.dev/blog/pointer-compression#:~:text=Value%20tagging%20in%20V8&text=This%20allows%20us%20to%20represent,an%20index%20in%20a%20loop

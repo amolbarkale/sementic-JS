@@ -49,27 +49,120 @@ function parsePrintStatement(index, tokens) {
 }
 
 function parseFunctionStatement(tokens, index) {
-  //function name, function body
+  // Assuming 'function' is at the provided index
+  let functionName = tokens[index + 1];
 
-  console.log(chalk.blue("Parsing Function here:"));
+  let bodyStartIndex = index + 5; // Skipping 'function', function name, '(', and ')'
 
-  let functionName = tokens[index];
-  console.log("functionName:", functionName);
+  let bodyEndIndex = bodyStartIndex;
 
-  // we need to find function body
-  let bodyStartIndex = index + 5;
-  console.log("bodyStartIndex:", bodyStartIndex);
-
-  let bodyLastIndex = bodyStartIndex;
-  console.log("bodyLastIndex:", bodyLastIndex);
-  // increament body last index till it reaches "}"
-
-  while (tokens[bodyLastIndex] !== "}") {
-    bodyLastIndex++;
+  while (tokens[bodyEndIndex] !== "}") {
+    bodyEndIndex++;
   }
 
-  let bodyTokens = tokens.slice(bodyStartIndex, bodyLastIndex);
-  console.log("bodyTokens:", bodyTokens);
+  // Find the end of the function body (before '}')
+
+  // Extract the tokens that represent the body of the function
+  let bodyTokens = tokens.slice(bodyStartIndex, bodyEndIndex);
+
+  let node = {
+    nodeType: "FunctionExpression",
+    metaData: {
+      functionName: functionName,
+      body: bodyTokens,
+    },
+  };
+
+  // node and the new index (position after the closing '}')
+  return { node, newIndex: bodyEndIndex + 1 };
 }
 
-export { ParseVariableStatement, parsePrintStatement, parseFunctionStatement };
+function parseFunctionCall(tokens, index) {
+  // The current token is assumed to be the function name
+  let functionName = tokens[index];
+
+  // Create the AST node for the function call
+  let node = {
+    nodeType: "FunctionCall",
+    metaData: {
+      functionName: functionName,
+      arguments: [], // Empty array since there are no arguments
+    },
+  };
+
+  // The new index will be the current index plus 3 (functionName, '(', ')')
+  let newIndex = index + 3;
+
+  return { node, newIndex };
+}
+
+// function parseIfStatement(tokens, index) {
+//   // Find the end of the condition (closing ')')
+//   let endIndex = index;
+//   let openBrackets = 0;
+//   while (endIndex < tokens.length) {
+//     if (tokens[endIndex] === "(") {
+//       openBrackets++;
+//     } else if (tokens[endIndex] === ")") {
+//       if (openBrackets === 0) {
+//         break;
+//       }
+//       openBrackets--;
+//     }
+//     endIndex++;
+//   }
+
+//   // Extract the condition tokens
+//   let conditionTokens = tokens.slice(index + 2, endIndex);
+//   let lhs = conditionTokens[0];
+//   let operator = conditionTokens[1];
+//   let rhs = conditionTokens[2];
+
+//   // Check if rhs is a string or number
+//   if (rhs.startsWith("'") && rhs.endsWith("'")) {
+//     rhs = rhs.slice(1, -1); // Remove the quotes
+//   } else {
+//     rhs = isNaN(Number(rhs)) ? rhs : Number(rhs);
+//   }
+
+//   // Find the start and end of the 'if' block
+//   let blockStartIndex = endIndex + 1; // Skip the closing ')'
+//   let blockEndIndex = blockStartIndex;
+//   let openCurlyBrackets = 0;
+//   while (blockEndIndex < tokens.length) {
+//     if (tokens[blockEndIndex] === "{") {
+//       openCurlyBrackets++;
+//     } else if (tokens[blockEndIndex] === "}") {
+//       openCurlyBrackets--;
+//       if (openCurlyBrackets === 0) {
+//         break;
+//       }
+//     }
+//     blockEndIndex++;
+//   }
+
+//   // Extract the tokens that represent the body of the 'if' statement
+//   let bodyTokens = tokens.slice(blockStartIndex + 1, blockEndIndex);
+
+//   let node = {
+//     nodeType: "ConditionalStatement",
+//     metaData: {
+//       condition: {
+//         lhs: lhs,
+//         operator: operator,
+//         rhs: rhs,
+//       },
+//     },
+//     body: bodyTokens.join(" "),
+//   };
+
+//   // Return the node and the new index (position after the closing '}')
+//   return { node, newIndex: blockEndIndex + 1 };
+// }
+
+export {
+  ParseVariableStatement,
+  parsePrintStatement,
+  parseFunctionStatement,
+  parseFunctionCall,
+};

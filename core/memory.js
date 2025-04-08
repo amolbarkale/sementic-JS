@@ -52,7 +52,15 @@ class MemoryImp {
   }
   _createMemooryNode(node) {
     let memoryNode = { ...node };
-    memoryNode.value = undefined;
+
+    //function hoisting
+    if (node.type == "function") {
+      memoryNode.value = node.value;
+      this._updateMemoryNode(memoryNode, node, memoryNode.value);
+    } else {
+      memoryNode.value = undefined;
+    }
+
     // stack: { name: 'arr', dataType: 'array', value: undefined, kind: 'const'}
     this.stack.push(memoryNode);
   }
