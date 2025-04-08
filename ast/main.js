@@ -1,5 +1,9 @@
 import { Memory } from "../core/memory.js";
-import { parsePrintStatement, ParseVariableStatement } from "./handlers.js";
+import {
+  parseFunctionStatement,
+  parsePrintStatement,
+  ParseVariableStatement,
+} from "./handlers.js";
 
 function createAst(tokens) {
   //Step 1: init AST
@@ -50,6 +54,9 @@ function createAst(tokens) {
 
         i = newIndexPrint - 1;
 
+        break;
+      case "function":
+        let temp = parseFunctionStatement(tokens, i);
         break;
       default:
         //handle unknown tokens

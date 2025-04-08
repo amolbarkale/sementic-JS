@@ -35,9 +35,7 @@ function InterpretJS(sourcecode) {
     switch (currentNodeType) {
       case "VariableDeclaration":
         // interprete var dec here
-        console.log(
-          chalk.red("AST Node: Var Declaration", currentNodeMetaData.name)
-        );
+
         result = currentNodeMetaData.value;
         Memory.write(currentNodeMetaData, result);
         break;
@@ -46,25 +44,11 @@ function InterpretJS(sourcecode) {
 
         switch (currentNodeMetaData.printType) {
           case "variable":
-            console.log(
-              chalk.yellow(
-                "AST Node: Print Statement: variable",
-                currentNodeMetaData.toPrint
-              )
-            );
-
             result = Memory.read(currentNodeMetaData.toPrint[0]);
             output.push(result.value);
             break;
           case "literal":
-            console.log(
-              chalk.cyan(
-                "AST Node: Print Statement: literal",
-                currentNodeMetaData.toPrint
-              )
-            );
             let literalString = currentNodeMetaData.toPrint.join(" ");
-            console.log("literalString:", literalString);
             result = stringSanitizeforFinalOutput(literalString);
             output.push(result);
             break;
