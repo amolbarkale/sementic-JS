@@ -10,4 +10,8 @@ print(arr);
 print(name);
 
 
+function showValues(){
 print("Hello from SemenicJS");
+}
+
+showValues()
