@@ -6,7 +6,6 @@ import {
 } from "./tokens-is.js";
 
 function findTokenDataType(tokens, index) {
-  //Dual token approach
   let token = tokens[index + 3];
   let nextToken = tokens[index + 4];
   switch (true) {

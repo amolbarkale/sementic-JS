@@ -31,7 +31,7 @@ function createAst(tokens) {
         //store this variables in memory
         //1st phase: Memory will have only declarations
 
-        Memory.write(variableNode.metaData)
+        Memory.write(variableNode.metaData);
         //2nd phase: Memory will have assignments
 
         //we need to implement memory
@@ -57,7 +57,7 @@ function createAst(tokens) {
         break;
     }
   }
-  console.log("ast:", ast);
+  return ast;
 }
 
 export { createAst };

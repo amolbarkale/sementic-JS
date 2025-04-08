@@ -2,27 +2,12 @@ import { findTokenDataType, findTokenValue } from "./tokens-find.js";
 import { isAllDigits } from "./utility.js";
 
 function ParseVariableStatement(tokens, index, kind) {
-  // // Node for variable declaration
-  // const declarationNode = {
-  //   nodeType: "VariableDeclaration",
-  //   metaData: {
-  //     name: tokens[index + 1],
-  //     // scope: scope, // assuming all variables are global for this example
-  //     // value: kind === "var" ? undefined : ReferenceError(kind),
-  //     value: undefined,
-  //     kind: kind,
-
-  //     dataType: findTokenDataType(tokens, index),
-  //   },
-  // };
-
   // Node for variable assignment
   const variableNode = {
     nodeType: "VariableDeclaration",
     metaData: {
       name: tokens[index + 1],
       dataType: findTokenDataType(tokens, index),
-
       value: findTokenValue(tokens, index),
       kind: kind,
     },

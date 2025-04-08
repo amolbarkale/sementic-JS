@@ -22,7 +22,7 @@ function logMemory() {
 
   let x = Memory.stack.map((item) => ({
     Name: item.name,
-    Value: item.value || item.address, // replace property1 with the actual property name
+    Value: item.value || item.address,
     // replace property1 with the actual property name
   }));
 
