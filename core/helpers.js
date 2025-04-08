@@ -1,11 +1,8 @@
-// Helper method to check if a node is uninitialized
-
 import chalk from "chalk";
 import { Memory } from "./memory.js";
 
-// Helper method to get value from heap
-function getHeapValue(node, heap) {
-  const heapNode = heap.get(node.value);
+function getHeapValue(memoryNode, heap) {
+  const heapNode = heap.get(memoryNode.value); //memoryNode.value(stack): this gives address
 
   return heapNode;
 }

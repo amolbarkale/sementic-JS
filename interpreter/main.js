@@ -5,6 +5,7 @@ import { codeCleaner } from "../lexer/cleaners.js";
 import { Parse } from "../parser/main.js";
 import { logMemory } from "../core/helpers.js";
 import { Memory } from "../core/memory.js";
+import { stringSanitizeforFinalOutput } from "./helpers.js";
 
 function InterpretJS(sourcecode) {
   //Step1: read sourcecode using node fs module
@@ -16,10 +17,10 @@ function InterpretJS(sourcecode) {
   const tokens = tokenize(result);
 
   //Step4: parser(tokens) -> AST
-
   const AST = Parse(tokens);
   console.log("AST:", AST);
 
+  let output = [];
   logMemory();
 
   //loop over AST node and interpret
@@ -42,9 +43,35 @@ function InterpretJS(sourcecode) {
         break;
       case "PrintStatement":
         // interprete print statements here
-        console.log(
-          chalk.blue("AST Node: Print Statement", currentNodeMetaData.toPrint)
-        );
+
+        switch (currentNodeMetaData.printType) {
+          case "variable":
+            console.log(
+              chalk.yellow(
+                "AST Node: Print Statement: variable",
+                currentNodeMetaData.toPrint
+              )
+            );
+
+            result = Memory.read(currentNodeMetaData.toPrint[0]);
+            output.push(result.value);
+            break;
+          case "literal":
+            console.log(
+              chalk.cyan(
+                "AST Node: Print Statement: literal",
+                currentNodeMetaData.toPrint
+              )
+            );
+            let literalString = currentNodeMetaData.toPrint.join(" ");
+            console.log("literalString:", literalString);
+            result = stringSanitizeforFinalOutput(literalString);
+            output.push(result);
+            break;
+
+          default:
+            break;
+        }
 
         break;
 
@@ -54,6 +81,7 @@ function InterpretJS(sourcecode) {
     }
   }
   logMemory();
+  return output;
 }
 
 function runFile(filePath) {
@@ -65,7 +93,11 @@ function runFile(filePath) {
     }
 
     //passing the sourcecode
-    let result = InterpretJS(sourcecode);
+    let output = InterpretJS(sourcecode);
+
+    output.forEach((item) => {
+      console.log("output:", item);
+    });
   });
 }
 

@@ -7,7 +7,28 @@ class MemoryImp {
   }
 
   // Define the read method to read values from memory
-  read(nodeName) {}
+  read(nodeName) {
+    // three cases of memorynode
+    //1. the value is not present
+    //2. the value is hoisted
+
+    let memoryNode = this.stack.find((item) => item.name === nodeName); // { name: 'arr', dataType: 'array', value: '0xAFC6', kind: 'const' }
+
+    if (memoryNode.value === undefined) {
+      let error = {};
+
+      // var, let,const
+
+      error.value =
+        memoryNode.kind === "var"
+          ? "undefined"
+          : `Referance Error: Cannot Access ${memoryNode.kind} before initialization`;
+
+      return error;
+    } else {
+      return getHeapValue(memoryNode, this.heap);
+    }
+  }
 
   // Define AssignValue method to assign new values to a node
   write(node, newval) {
@@ -21,7 +42,6 @@ class MemoryImp {
     // stack: { name: 'arr', dataType: 'array', value: '[ 1 , 2 , 3 , 4 ]', kind: 'const'}
 
     let memoryNode = this.stack.find((item) => item.name === node.name);
-    console.log("write to MemoryNode:", memoryNode);
     if (!memoryNode) {
       // method to create a new entry to memory
       this._createMemooryNode(node);
