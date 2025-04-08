@@ -25,46 +25,59 @@ function InterpretJS(sourcecode) {
 
   //loop over AST node and interpret
   console.log(chalk.red("Execution phase: Interpretation starts"));
-  for (let i = 0; i < AST.length; i++) {
-    const currentNode = AST[i];
-    const currentNodeType = currentNode.nodeType;
-    const currentNodeMetaData = currentNode.metaData;
 
-    let result;
+  function InterpretAST(AST) {
+    for (let i = 0; i < AST.length; i++) {
+      const currentNode = AST[i];
+      const currentNodeType = currentNode.nodeType;
+      const currentNodeMetaData = currentNode.metaData;
 
-    switch (currentNodeType) {
-      case "VariableDeclaration":
-        // interprete var dec here
+      let result;
 
-        result = currentNodeMetaData.value;
-        Memory.write(currentNodeMetaData, result);
-        break;
-      case "PrintStatement":
-        // interprete print statements here
+      switch (currentNodeType) {
+        case "VariableDeclaration":
+          // interprete var dec here
 
-        switch (currentNodeMetaData.printType) {
-          case "variable":
-            result = Memory.read(currentNodeMetaData.toPrint[0]);
-            output.push(result.value);
-            break;
-          case "literal":
-            let literalString = currentNodeMetaData.toPrint.join(" ");
-            result = stringSanitizeforFinalOutput(literalString);
-            output.push(result);
-            break;
+          result = currentNodeMetaData.value;
+          Memory.write(currentNodeMetaData, result);
+          break;
+        case "PrintStatement":
+          // interprete print statements here
 
-          default:
-            break;
-        }
+          switch (currentNodeMetaData.printType) {
+            case "variable":
+              result = Memory.read(currentNodeMetaData.toPrint[0]);
+              output.push(result.value);
+              break;
+            case "literal":
+              let literalString = currentNodeMetaData.toPrint.join(" ");
+              result = stringSanitizeforFinalOutput(literalString);
+              output.push(result);
+              break;
 
-        break;
+            default:
+              break;
+          }
 
-      default:
-        console.log("Unknown nodeType:", currentNode);
-        break;
+          break;
+        case "FunctionCall":
+          console.log("function currrentNodeMetaData:", currentNodeMetaData);
+
+          result = Memory.read(currentNodeMetaData.functionName);
+
+          InterpretAST(result.value);
+
+        default:
+          console.log("Unknown nodeType:", currentNode);
+          break;
+      }
     }
   }
+
+  InterpretAST(AST);
+
   logMemory();
+
   return output;
 }
 
