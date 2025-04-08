@@ -10,8 +10,7 @@ class MemoryImp {
   read(nodeName) {}
 
   // Define AssignValue method to assign new values to a node
-  write(node, newval, scope) {
-    console.log("incoming var node phase 1:", node);
+  write(node, newval) {
     // node: { name: 'num', dataType: 'number', value: '12', kind: 'let' }
 
     // multiple cases
@@ -22,11 +21,13 @@ class MemoryImp {
     // stack: { name: 'arr', dataType: 'array', value: '[ 1 , 2 , 3 , 4 ]', kind: 'const'}
 
     let memoryNode = this.stack.find((item) => item.name === node.name);
+    console.log("write to MemoryNode:", memoryNode);
     if (!memoryNode) {
       // method to create a new entry to memory
       this._createMemooryNode(node);
     } else {
       // method to update to memory
+      this._updateMemoryNode(memoryNode, node, newval);
     }
   }
   _createMemooryNode(node) {
@@ -36,7 +37,15 @@ class MemoryImp {
     this.stack.push(memoryNode);
   }
 
-  _updateMemoryNode() {}
+  _updateMemoryNode(memoryNode, node, newval) {
+    let address = generateMemoryAddress();
+
+    memoryNode.value = address;
+
+    node.value = newval;
+
+    this.heap.set(address, node);
+  }
 }
 
 const Memory = new MemoryImp();
