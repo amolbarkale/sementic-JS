@@ -32,9 +32,3 @@ This project is a **work in progress** experiment to understand the inner workin
 - To understand JavaScript as a language engineer.
 
 ---
-
-## Project Structure
-
-Here’s a high-level view of the directories and files:
-
-<pre lang="text"><code>. ├── ast/ # Abstract Syntax Tree construction helpers ├── core/ # Core functionalities and shared utilities ├── extra/ # Additional features, experiments, or prototypes ├── interpreter/ # Core logic for walking and executing the AST ├── lexer/ # Tokenization of the input source code ├── parser/ # Parsing tokens into a usable AST ├── test.js # Sample test file demonstrating usage ├── package.json # Project metadata and dependencies └── README.md # This file </code></pre>
