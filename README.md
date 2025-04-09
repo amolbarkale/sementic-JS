@@ -37,13 +37,4 @@ This project is a **work in progress** experiment to understand the inner workin
 
 Here’s a high-level view of the directories and files:
 
-.
-├── ast/               // Abstract Syntax Tree construction helpers
-├── core/              // Core functionalities and shared utilities
-├── extra/             // Additional features, experiments, or prototypes
-├── interpreter/       // Core logic for walking and executing the AST
-├── lexer/             // Tokenization of the input source code
-├── parser/            // Parsing tokens into a usable AST
-├── test.sjs           // FILE which serves the primary source of code execution
-├── package.json       // Project metadata and dependencies
-└── README.md          // This file
+<pre lang="text"><code>. ├── ast/ # Abstract Syntax Tree construction helpers ├── core/ # Core functionalities and shared utilities ├── extra/ # Additional features, experiments, or prototypes ├── interpreter/ # Core logic for walking and executing the AST ├── lexer/ # Tokenization of the input source code ├── parser/ # Parsing tokens into a usable AST ├── test.js # Sample test file demonstrating usage ├── package.json # Project metadata and dependencies └── README.md # This file </code></pre>
