@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { findTokenDataType, findTokenValue } from "./tokens-find.js";
 import { isAllDigits } from "./utility.js";
 
-function ParseVariableStatement(tokens, index, kind) {
+function ParseVariableDeclaration(tokens, index, kind) {
   // Node for variable assignment
   const variableNode = {
     nodeType: "VariableDeclaration",
@@ -161,7 +161,7 @@ function parseFunctionCall(tokens, index) {
 // }
 
 export {
-  ParseVariableStatement,
+  ParseVariableDeclaration,
   parsePrintStatement,
   parseFunctionStatement,
   parseFunctionCall,

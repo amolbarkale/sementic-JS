@@ -3,7 +3,7 @@ import {
   parseFunctionCall,
   parseFunctionStatement,
   parsePrintStatement,
-  ParseVariableStatement,
+  ParseVariableDeclaration,
 } from "./handlers.js";
 
 function createAst(tokens) {
@@ -26,11 +26,12 @@ function createAst(tokens) {
       case "let":
       case "const":
       case "var":
-        const { variableNode, newIndex } = ParseVariableStatement(
+        const { variableNode, newIndex } = ParseVariableDeclaration(
           tokens,
           i,
           token
         );
+
         ast.push(variableNode);
 
         //store this variables in memory
